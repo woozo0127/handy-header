@@ -4,7 +4,7 @@ export default defineManifest({
   manifest_version: 3,
   name: 'HandyHeader',
   version: '0.1.0',
-  description: 'HTTP 요청/응답 헤더 수정 + URL 리다이렉트',
+  description: 'Modify HTTP request/response headers and redirect URLs.',
   icons: {
     16: 'public/icons/icon-16.png',
     32: 'public/icons/icon-32.png',
