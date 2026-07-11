@@ -11,8 +11,9 @@ async function applyBadge(text: string): Promise<void> {
   await chrome.action.setBadgeText({ text });
   if (text) {
     await chrome.action.setBadgeBackgroundColor({
-      color: text === 'ERR' ? '#D93025' : '#26A756',
+      color: text === 'ERR' ? '#D93025' : '#3D87FF',
     });
+    await chrome.action.setBadgeTextColor({ color: '#FFFFFF' });
   }
 }
 
