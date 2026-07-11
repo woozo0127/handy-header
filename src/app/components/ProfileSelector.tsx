@@ -27,7 +27,6 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
           setOpen((v) => !v)
         }}
       >
-        <span className="profile-dot" />
         <span>{active?.name}</span>
         <span className="profile-caret">▾</span>
       </button>
@@ -44,7 +43,6 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
               }}
             >
               <span className="profmenu-item-label">
-                <span className="profmenu-dot" />
                 {/* 이름 클릭은 편집이지 선택이 아니므로 항목 onClick으로 전파를 막는다 */}
                 <span onClick={(e) => e.stopPropagation()}>
                   <EditableField
@@ -69,7 +67,6 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
                   ×
                 </button>
               )}
-              <span className="profmenu-check">✓</span>
             </div>
           ))}
           <div className="profmenu-divider" />

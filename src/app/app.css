@@ -26,12 +26,11 @@
   --radius-full: 9999px;
   --font-body: 'Figtree', -apple-system, system-ui, sans-serif;
   --font-code: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
-  --shadow-high: 0 24px 60px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.35);
 }
 
 * { box-sizing: border-box; }
 
-html, body { width: 440px; height: 600px; }
+html, body { width: 480px; height: 600px; }
 
 body {
   margin: 0;
@@ -71,12 +70,12 @@ button { font-family: var(--font-body); }
   transition: transform .18s;
 }
 .toggle.is-on .toggle-knob { background: var(--color-on-accent); }
-.toggle-md { width: 36px; height: 20px; }
-.toggle-md .toggle-knob { width: 16px; height: 16px; }
-.toggle-md.is-on .toggle-knob { transform: translateX(16px); }
-.toggle-sm { width: 34px; height: 19px; }
-.toggle-sm .toggle-knob { width: 15px; height: 15px; }
-.toggle-sm.is-on .toggle-knob { transform: translateX(15px); }
+.toggle-md { width: 40px; height: 22px; }
+.toggle-md .toggle-knob { width: 18px; height: 18px; }
+.toggle-md.is-on .toggle-knob { transform: translateX(18px); }
+.toggle-sm { width: 36px; height: 20px; }
+.toggle-sm .toggle-knob { width: 16px; height: 16px; }
+.toggle-sm.is-on .toggle-knob { transform: translateX(16px); }
 
 /* ===== EditableField ===== */
 .editable {
@@ -94,22 +93,22 @@ button { font-family: var(--font-body); }
 /* ===== Shell ===== */
 .titlebar {
   position: relative;
-  height: 54px;
+  height: 58px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+  padding: 0 16px;
   z-index: 20;
 }
 .titlebar-brand { display: flex; align-items: center; gap: 10px; }
-.titlebar-name { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+.titlebar-name { font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
 .titlebar-controls { display: flex; align-items: center; gap: 10px; }
 
 .logo {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-inner);
   background: var(--color-accent);
   display: flex;
@@ -130,17 +129,16 @@ button { font-family: var(--font-body); }
   background: var(--color-bg-muted);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-inner);
-  padding: 6px 10px;
+  padding: 7px 12px;
   color: var(--color-text-primary);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 500;
   cursor: pointer;
 }
-.profile-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-icon-green); }
-.profile-caret { color: var(--color-text-secondary); font-size: 10px; }
+.profile-caret { color: var(--color-text-secondary); font-size: 11px; }
 
 .tabs {
-  height: 44px;
+  height: 48px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--color-border);
   display: flex;
@@ -152,9 +150,9 @@ button { font-family: var(--font-body); }
   border: none;
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 500;
-  padding: 0 11px;
+  padding: 0 13px;
   cursor: pointer;
   border-bottom: 2px solid transparent;
 }
@@ -168,22 +166,22 @@ button { font-family: var(--font-body); }
 
 .error-banner {
   flex-shrink: 0;
-  margin: 8px 12px 0;
+  margin: 8px 14px 0;
   padding: 8px 10px;
   border: 1px solid var(--color-text-red);
   border-radius: var(--radius-inner);
   color: var(--color-text-red);
-  font-size: 12px;
+  font-size: 13px;
   font-family: var(--font-code);
   word-break: break-all;
 }
 
 /* ===== Rule rows (Headers/Redirect 공용) ===== */
-.sec-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px 5px; }
-[data-sec] + [data-sec] .sec-head { padding-top: 16px; }
+.sec-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px 6px; }
+[data-sec] + [data-sec] .sec-head { padding-top: 18px; }
 .sec-label {
   font-family: var(--font-code);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .13em;
   text-transform: uppercase;
 }
@@ -191,13 +189,13 @@ button { font-family: var(--font-body); }
 .sec-label.is-purple { color: var(--color-text-purple); }
 .sec-line { flex: 1; height: 1px; background: var(--color-border); }
 
-.rule-row { display: flex; align-items: center; gap: 9px; padding: 9px 12px; }
+.rule-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
 .rule-row.is-off { opacity: .5; }
-.rule-name { color: var(--color-text-primary); font-size: 12px; flex-shrink: 0; }
-.rule-colon { color: var(--color-text-disabled); font-family: var(--font-code); font-size: 12px; }
+.rule-name { color: var(--color-text-primary); font-size: 13px; flex-shrink: 0; }
+.rule-colon { color: var(--color-text-disabled); font-family: var(--font-code); font-size: 13px; }
 .rule-value {
   color: var(--color-text-secondary);
-  font-size: 11px;
+  font-size: 12px;
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -207,13 +205,13 @@ button { font-family: var(--font-body); }
 .rule-value:focus { overflow-x: auto; text-overflow: clip; }
 
 .remove {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   background: transparent;
   border: none;
   color: var(--color-text-disabled);
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
   border-radius: 6px;
   line-height: 1;
@@ -227,43 +225,42 @@ button { font-family: var(--font-body); }
   display: flex;
   align-items: center;
   gap: 7px;
-  margin: 6px 12px 2px;
-  padding: 9px 10px;
+  margin: 6px 14px 2px;
+  padding: 10px 12px;
   background: transparent;
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-inner);
   color: var(--color-text-secondary);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   text-align: left;
-  width: calc(100% - 24px);
+  width: calc(100% - 28px);
 }
 .addrow:hover {
   background: var(--color-overlay-hover);
   color: var(--color-text-primary);
   border-color: var(--color-border-emphasized);
 }
-.addrow-plus { font-size: 15px; line-height: 1; margin-top: -1px; }
+.addrow-plus { font-size: 16px; line-height: 1; margin-top: -1px; }
 
 /* ===== Redirect rows ===== */
-.redirect-row { padding: 10px 12px; }
+.redirect-row { padding: 11px 14px; }
 .redirect-fields { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.redirect-match { color: var(--color-text-primary); font-size: 11.5px; }
+.redirect-match { color: var(--color-text-primary); font-size: 12.5px; }
 .redirect-arrow-line { display: flex; align-items: center; gap: 6px; }
-.redirect-arrow { color: var(--color-text-disabled); font-family: var(--font-code); font-size: 11px; }
-.redirect-target { color: var(--color-text-secondary); font-size: 11px; flex: 1; min-width: 0; }
+.redirect-arrow { color: var(--color-text-disabled); font-family: var(--font-code); font-size: 12px; }
+.redirect-target { color: var(--color-text-secondary); font-size: 12px; flex: 1; min-width: 0; }
 
 /* ===== Profile dropdown ===== */
 .profmenu {
   position: absolute;
-  top: 50px;
-  right: 52px;
-  width: 216px;
+  top: 54px;
+  right: 56px;
+  width: 232px;
   background: var(--color-bg-popover);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-element);
-  box-shadow: var(--shadow-high);
   overflow: hidden;
   z-index: 40;
   padding: 4px;
@@ -277,20 +274,16 @@ button { font-family: var(--font-body); }
   background: transparent;
   border: none;
   border-radius: var(--radius-inner);
-  padding: 6px 10px;
+  padding: 7px 11px;
   color: var(--color-text-secondary);
-  font-size: 12.5px;
+  font-size: 13.5px;
   cursor: pointer;
   text-align: left;
 }
 .profmenu-item.is-active { background: var(--color-overlay-hover); color: var(--color-text-primary); }
 .profmenu-item:hover { background: var(--color-overlay-hover); }
 .profmenu-item-label { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
-.profmenu-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-border-emphasized); flex-shrink: 0; }
-.profmenu-item.is-active .profmenu-dot { background: var(--color-icon-green); }
-.profmenu-check { color: var(--color-text-primary); font-size: 12px; visibility: hidden; flex-shrink: 0; }
-.profmenu-item.is-active .profmenu-check { visibility: visible; }
-.profmenu-item .remove { width: 18px; height: 18px; font-size: 13px; }
+.profmenu-item .remove { width: 20px; height: 20px; font-size: 14px; }
 /* .remove의 hover 노출 규칙(Task 8)은 .rule-row 기준이므로 프로필 항목용을 별도 정의 */
 .profmenu-item:hover .remove { opacity: 1; }
 .profmenu-divider { height: 1px; background: var(--color-border); margin: 4px 0; }
@@ -302,9 +295,9 @@ button { font-family: var(--font-body); }
   background: transparent;
   border: none;
   border-radius: var(--radius-inner);
-  padding: 9px 10px;
+  padding: 10px 11px;
   color: var(--color-text-secondary);
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   text-align: left;
 }
