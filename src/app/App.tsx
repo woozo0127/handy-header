@@ -4,6 +4,7 @@ import { TitleBar } from './TitleBar'
 import { Tabs, type TabId } from './Tabs'
 import { ErrorBanner } from './components/ErrorBanner'
 import { HeadersScreen } from './screens/headers/HeadersScreen'
+import { RedirectScreen } from './screens/redirect/RedirectScreen'
 
 export function App() {
   const { state, activeProfile, actions } = useAppState()
@@ -20,7 +21,7 @@ export function App() {
         {tab === 'headers' ? (
           <HeadersScreen profile={activeProfile} actions={actions} />
         ) : (
-          <div style={{ padding: 14 }}>Redirect screen (Task 9)</div>
+          <RedirectScreen profile={activeProfile} actions={actions} />
         )}
       </main>
     </>
