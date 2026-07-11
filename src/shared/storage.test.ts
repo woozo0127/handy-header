@@ -45,7 +45,7 @@ describe('storage', () => {
     expect(state.version).toBe(1)
     expect(state.globalEnabled).toBe(true)
     expect(state.profiles).toHaveLength(1)
-    expect(state.profiles[0].name).toBe('Local Dev')
+    expect(state.profiles[0].name).toBe('Profile 1')
     expect(state.activeProfileId).toBe(state.profiles[0].id)
     expect(store[STATE_KEY]).toEqual(state)
   })
@@ -55,7 +55,7 @@ describe('storage', () => {
     const state = await loadState()
     expect(state.version).toBe(1)
     expect(state.profiles).toHaveLength(1)
-    expect(state.profiles[0].name).toBe('Local Dev')
+    expect(state.profiles[0].name).toBe('Profile 1')
     expect(store[STATE_KEY]).toEqual(state)
   })
 

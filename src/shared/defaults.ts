@@ -1,6 +1,6 @@
 import type { AppState, Profile } from './types'
 
-export function createDefaultProfile(name = 'Local Dev'): Profile {
+export function createDefaultProfile(name = 'Profile 1'): Profile {
   return { id: crypto.randomUUID(), name, headerRules: [], redirectRules: [] }
 }
 
