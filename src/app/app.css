@@ -302,3 +302,4 @@ button { font-family: var(--font-body); }
   text-align: left;
 }
 .profmenu-new:hover { background: var(--color-overlay-hover); color: var(--color-text-primary); }
+.profmenu-error { padding: 4px 11px 8px; color: var(--color-text-red); font-size: 12px; word-break: break-word; }
