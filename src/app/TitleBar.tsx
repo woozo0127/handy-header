@@ -1,9 +1,9 @@
 import type { AppState } from '../shared/types'
 import type { AppActions } from './hooks/useAppState'
+import { ProfileSelector } from './components/ProfileSelector'
 import { Toggle } from './components/Toggle'
 
 export function TitleBar({ state, actions }: { state: AppState; actions: AppActions }) {
-  const active = state.profiles.find((p) => p.id === state.activeProfileId)
   return (
     <div className="titlebar">
       <div className="titlebar-brand">
@@ -15,11 +15,7 @@ export function TitleBar({ state, actions }: { state: AppState; actions: AppActi
         <span className="titlebar-name">handy-header</span>
       </div>
       <div className="titlebar-controls">
-        <button type="button" className="profile-btn">
-          <span className="profile-dot" />
-          <span>{active?.name}</span>
-          <span className="profile-caret">▾</span>
-        </button>
+        <ProfileSelector profiles={state.profiles} activeProfileId={state.activeProfileId} actions={actions} />
         <Toggle
           on={state.globalEnabled}
           onChange={actions.toggleGlobal}
