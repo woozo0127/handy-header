@@ -3,6 +3,7 @@ import type { Profile } from '../../shared/types'
 import type { AppActions } from '../hooks/useAppState'
 import { parseProfileFile, serializeProfile } from '../../shared/transfer'
 import { EditableField } from './EditableField'
+import { ConfirmDialog } from './ConfirmDialog'
 
 type Props = { profiles: Profile[]; activeProfileId: string; actions: AppActions }
 
@@ -12,6 +13,7 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [importError, setImportError] = useState<string | null>(null)
+  const [pendingDelete, setPendingDelete] = useState<Profile | null>(null)
 
   // 메뉴가 닫히면 import 에러 표시를 리셋한다
   useEffect(() => {
@@ -90,7 +92,7 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
                   title="Remove profile"
                   onClick={(e) => {
                     e.stopPropagation()
-                    actions.removeProfile(profile.id)
+                    setPendingDelete(profile)
                   }}
                 >
                   ×
@@ -129,6 +131,18 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
             }}
           />
         </div>
+      )}
+
+      {pendingDelete && (
+        <ConfirmDialog
+          message={`Delete "${pendingDelete.name}"?`}
+          confirmLabel="Delete"
+          onConfirm={() => {
+            actions.removeProfile(pendingDelete.id)
+            setPendingDelete(null)
+          }}
+          onCancel={() => setPendingDelete(null)}
+        />
       )}
     </>
   )
