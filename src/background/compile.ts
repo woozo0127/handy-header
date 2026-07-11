@@ -1,19 +1,27 @@
-import type { AppState, HeaderRule, RedirectRule } from '../shared/types'
+import type { AppState, HeaderRule, RedirectRule } from '../shared/types';
 
 // chrome.declarativeNetRequest.Rule과 구조 호환. chrome 전역(런타임 enum)을
 // 참조하지 않기 위해 자체 정의한다 — 이 파일은 node 환경 vitest에서 실행된다.
 export type DnrRule = {
-  id: number
-  priority: 1
+  id: number;
+  priority: 1;
   action:
     | {
-        type: 'modifyHeaders'
-        requestHeaders?: Array<{ header: string; operation: 'set'; value: string }>
-        responseHeaders?: Array<{ header: string; operation: 'set'; value: string }>
+        type: 'modifyHeaders';
+        requestHeaders?: Array<{
+          header: string;
+          operation: 'set';
+          value: string;
+        }>;
+        responseHeaders?: Array<{
+          header: string;
+          operation: 'set';
+          value: string;
+        }>;
       }
-    | { type: 'redirect'; redirect: { regexSubstitution: string } }
-  condition: { regexFilter?: string; resourceTypes: string[] }
-}
+    | { type: 'redirect'; redirect: { regexSubstitution: string } };
+  condition: { regexFilter?: string; resourceTypes: string[] };
+};
 
 // 기본값 동작(문서상 모호)에 의존하지 않도록 전체 명시 (스펙 §DNR 컴파일 명세 3항)
 const ALL_RESOURCE_TYPES = [
@@ -30,47 +38,49 @@ const ALL_RESOURCE_TYPES = [
   'media',
   'websocket',
   'other',
-]
+];
 
 // RFC 7230 token 문자셋
-const HEADER_NAME_RE = /^[A-Za-z0-9!#$%&'*+.^_`|~-]+$/
+const HEADER_NAME_RE = /^[A-Za-z0-9!#$%&'*+.^_`|~-]+$/;
 
 function isValidHeader(rule: HeaderRule): boolean {
-  return HEADER_NAME_RE.test(rule.name)
+  return HEADER_NAME_RE.test(rule.name);
 }
 
 function wildcardCount(pattern: string): number {
-  return pattern.split('*').length - 1
+  return pattern.split('*').length - 1;
 }
 
 function isValidRedirect(rule: RedirectRule): boolean {
-  if (!rule.match || !rule.target) return false
-  return wildcardCount(rule.target) <= wildcardCount(rule.match)
+  if (!rule.match || !rule.target) return false;
+  return wildcardCount(rule.target) <= wildcardCount(rule.match);
 }
 
 function escapeRegex(literal: string): string {
-  return literal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return literal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function toRegexFilter(match: string): string {
-  return '^' + match.split('*').map(escapeRegex).join('(.*)') + '$'
+  return `^${match.split('*').map(escapeRegex).join('(.*)')}$`;
 }
 
 function toSubstitution(target: string): string {
-  let group = 0
-  return target.replace(/\*/g, () => `\\${++group}`)
+  let group = 0;
+  return target.replace(/\*/g, () => `\\${++group}`);
 }
 
 export function compile(state: AppState): DnrRule[] {
-  if (!state.globalEnabled) return []
-  const profile = state.profiles.find((p) => p.id === state.activeProfileId)
-  if (!profile) return []
+  if (!state.globalEnabled) return [];
+  const profile = state.profiles.find((p) => p.id === state.activeProfileId);
+  if (!profile) return [];
 
-  const rules: DnrRule[] = []
+  const rules: DnrRule[] = [];
 
   for (const rule of profile.headerRules) {
-    if (!rule.enabled || !isValidHeader(rule)) continue
-    const headers = [{ header: rule.name, operation: 'set' as const, value: rule.value }]
+    if (!rule.enabled || !isValidHeader(rule)) continue;
+    const headers = [
+      { header: rule.name, operation: 'set' as const, value: rule.value },
+    ];
     rules.push({
       id: rules.length + 1,
       priority: 1,
@@ -79,18 +89,24 @@ export function compile(state: AppState): DnrRule[] {
           ? { type: 'modifyHeaders', requestHeaders: headers }
           : { type: 'modifyHeaders', responseHeaders: headers },
       condition: { resourceTypes: ALL_RESOURCE_TYPES },
-    })
+    });
   }
 
   for (const rule of profile.redirectRules) {
-    if (!rule.enabled || !isValidRedirect(rule)) continue
+    if (!rule.enabled || !isValidRedirect(rule)) continue;
     rules.push({
       id: rules.length + 1,
       priority: 1,
-      action: { type: 'redirect', redirect: { regexSubstitution: toSubstitution(rule.target) } },
-      condition: { regexFilter: toRegexFilter(rule.match), resourceTypes: ALL_RESOURCE_TYPES },
-    })
+      action: {
+        type: 'redirect',
+        redirect: { regexSubstitution: toSubstitution(rule.target) },
+      },
+      condition: {
+        regexFilter: toRegexFilter(rule.match),
+        resourceTypes: ALL_RESOURCE_TYPES,
+      },
+    });
   }
 
-  return rules
+  return rules;
 }

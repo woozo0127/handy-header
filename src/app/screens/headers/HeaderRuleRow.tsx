@@ -1,14 +1,17 @@
-import type { HeaderRule } from '../../../shared/types'
-import type { AppActions } from '../../hooks/useAppState'
-import { Toggle } from '../../components/Toggle'
-import { EditableField } from '../../components/EditableField'
+import type { HeaderRule } from '../../../shared/types';
+import { EditableField } from '../../components/EditableField';
+import { Toggle } from '../../components/Toggle';
+import type { AppActions } from '../../hooks/useAppState';
 
-type Props = { rule: HeaderRule; autoFocus: boolean; actions: AppActions }
+type Props = { rule: HeaderRule; autoFocus: boolean; actions: AppActions };
 
 export function HeaderRuleRow({ rule, autoFocus, actions }: Props) {
   return (
     <div className={`rule-row${rule.enabled ? '' : ' is-off'}`}>
-      <Toggle on={rule.enabled} onChange={(on) => actions.updateHeaderRule(rule.id, { enabled: on })} />
+      <Toggle
+        on={rule.enabled}
+        onChange={(on) => actions.updateHeaderRule(rule.id, { enabled: on })}
+      />
       <EditableField
         className="rule-name mono"
         value={rule.name}
@@ -23,9 +26,14 @@ export function HeaderRuleRow({ rule, autoFocus, actions }: Props) {
         placeholder="value"
         onCommit={(value) => actions.updateHeaderRule(rule.id, { value })}
       />
-      <button type="button" className="remove" title="Remove rule" onClick={() => actions.removeHeaderRule(rule.id)}>
+      <button
+        type="button"
+        className="remove"
+        title="Remove rule"
+        onClick={() => actions.removeHeaderRule(rule.id)}
+      >
         ×
       </button>
     </div>
-  )
+  );
 }

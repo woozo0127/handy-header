@@ -1,10 +1,16 @@
-import { useState } from 'react'
-import type { Profile } from '../../../shared/types'
-import type { AppActions } from '../../hooks/useAppState'
-import { HeaderRuleGroup } from './HeaderRuleGroup'
+import { useState } from 'react';
+import type { Profile } from '../../../shared/types';
+import type { AppActions } from '../../hooks/useAppState';
+import { HeaderRuleGroup } from './HeaderRuleGroup';
 
-export function HeadersScreen({ profile, actions }: { profile: Profile; actions: AppActions }) {
-  const [focusId, setFocusId] = useState<string | null>(null)
+export function HeadersScreen({
+  profile,
+  actions,
+}: {
+  profile: Profile;
+  actions: AppActions;
+}) {
+  const [focusId, setFocusId] = useState<string | null>(null);
   return (
     <>
       <HeaderRuleGroup
@@ -24,5 +30,5 @@ export function HeadersScreen({ profile, actions }: { profile: Profile; actions:
         onAdd={() => setFocusId(actions.addHeaderRule('response'))}
       />
     </>
-  )
+  );
 }

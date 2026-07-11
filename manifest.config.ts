@@ -1,4 +1,4 @@
-import { defineManifest } from '@crxjs/vite-plugin'
+import { defineManifest } from '@crxjs/vite-plugin';
 
 export default defineManifest({
   manifest_version: 3,
@@ -21,4 +21,4 @@ export default defineManifest({
   background: { service_worker: 'src/background/index.ts', type: 'module' },
   permissions: ['declarativeNetRequest', 'storage'],
   host_permissions: ['<all_urls>'],
-})
+});

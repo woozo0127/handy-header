@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import { useAppState } from './hooks/useAppState'
-import { TitleBar } from './TitleBar'
-import { Tabs, type TabId } from './Tabs'
-import { ErrorBanner } from './components/ErrorBanner'
-import { HeadersScreen } from './screens/headers/HeadersScreen'
-import { RedirectScreen } from './screens/redirect/RedirectScreen'
+import { useState } from 'react';
+import { ErrorBanner } from './components/ErrorBanner';
+import { type TabId, Tabs } from './components/Tabs';
+import { TitleBar } from './components/TitleBar';
+import { useAppState } from './hooks/useAppState';
+import { HeadersScreen } from './screens/headers/HeadersScreen';
+import { RedirectScreen } from './screens/redirect/RedirectScreen';
 
 export function App() {
-  const { state, activeProfile, actions } = useAppState()
-  const [tab, setTab] = useState<TabId>('headers')
+  const { state, activeProfile, actions } = useAppState();
+  const [tab, setTab] = useState<TabId>('headers');
 
-  if (!state || !activeProfile) return null
+  if (!state || !activeProfile) return null;
 
   return (
     <>
@@ -25,5 +25,5 @@ export function App() {
         )}
       </main>
     </>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import type { HeaderRule, Profile, RedirectRule } from './types'
+import type { HeaderRule, Profile, RedirectRule } from './types';
 
-const FILE_TYPE = 'handy-header-profile'
-const FILE_VERSION = 1
+const FILE_TYPE = 'handy-header-profile';
+const FILE_VERSION = 1;
 
 export function serializeProfile(profile: Profile): string {
   return JSON.stringify(
@@ -25,24 +25,26 @@ export function serializeProfile(profile: Profile): string {
     },
     null,
     2,
-  )
+  );
 }
 
 export function parseProfileFile(text: string): Profile {
-  let data: unknown
+  let data: unknown;
   try {
-    data = JSON.parse(text)
+    data = JSON.parse(text);
   } catch {
-    throw new Error('Invalid JSON file')
+    throw new Error('Invalid JSON file');
   }
   if (typeof data !== 'object' || data === null || Array.isArray(data)) {
-    throw new Error('Not a HandyHeader profile file')
+    throw new Error('Not a HandyHeader profile file');
   }
-  const file = data as Record<string, unknown>
-  if (file.type !== FILE_TYPE) throw new Error('Not a HandyHeader profile file')
-  if (file.version !== FILE_VERSION) throw new Error('Unsupported file version')
+  const file = data as Record<string, unknown>;
+  if (file.type !== FILE_TYPE)
+    throw new Error('Not a HandyHeader profile file');
+  if (file.version !== FILE_VERSION)
+    throw new Error('Unsupported file version');
 
-  const profile = file.profile as Record<string, unknown> | null | undefined
+  const profile = file.profile as Record<string, unknown> | null | undefined;
   if (
     typeof profile !== 'object' ||
     profile === null ||
@@ -50,7 +52,7 @@ export function parseProfileFile(text: string): Profile {
     !isExportedHeaderRules(profile.headerRules) ||
     !isExportedRedirectRules(profile.redirectRules)
   ) {
-    throw new Error('Malformed profile data')
+    throw new Error('Malformed profile data');
   }
 
   return {
@@ -69,35 +71,46 @@ export function parseProfileFile(text: string): Profile {
       match: r.match,
       target: r.target,
     })),
-  }
+  };
 }
 
-export function uniqueProfileName(name: string, existingNames: string[]): string {
-  if (!existingNames.includes(name)) return name
-  let n = 2
-  while (existingNames.includes(`${name} (${n})`)) n++
-  return `${name} (${n})`
+export function uniqueProfileName(
+  name: string,
+  existingNames: string[],
+): string {
+  if (!existingNames.includes(name)) return name;
+  let n = 2;
+  while (existingNames.includes(`${name} (${n})`)) n++;
+  return `${name} (${n})`;
 }
 
-function isExportedHeaderRules(value: unknown): value is Omit<HeaderRule, 'id'>[] {
-  if (!Array.isArray(value)) return false
+function isExportedHeaderRules(
+  value: unknown,
+): value is Omit<HeaderRule, 'id'>[] {
+  if (!Array.isArray(value)) return false;
   return value.every((item) => {
-    if (typeof item !== 'object' || item === null) return false
-    const r = item as Record<string, unknown>
+    if (typeof item !== 'object' || item === null) return false;
+    const r = item as Record<string, unknown>;
     return (
       typeof r.enabled === 'boolean' &&
       (r.direction === 'request' || r.direction === 'response') &&
       typeof r.name === 'string' &&
       typeof r.value === 'string'
-    )
-  })
+    );
+  });
 }
 
-function isExportedRedirectRules(value: unknown): value is Omit<RedirectRule, 'id'>[] {
-  if (!Array.isArray(value)) return false
+function isExportedRedirectRules(
+  value: unknown,
+): value is Omit<RedirectRule, 'id'>[] {
+  if (!Array.isArray(value)) return false;
   return value.every((item) => {
-    if (typeof item !== 'object' || item === null) return false
-    const r = item as Record<string, unknown>
-    return typeof r.enabled === 'boolean' && typeof r.match === 'string' && typeof r.target === 'string'
-  })
+    if (typeof item !== 'object' || item === null) return false;
+    const r = item as Record<string, unknown>;
+    return (
+      typeof r.enabled === 'boolean' &&
+      typeof r.match === 'string' &&
+      typeof r.target === 'string'
+    );
+  });
 }

@@ -1,10 +1,16 @@
-import { useState } from 'react'
-import type { Profile } from '../../../shared/types'
-import type { AppActions } from '../../hooks/useAppState'
-import { RedirectRuleList } from './RedirectRuleList'
+import { useState } from 'react';
+import type { Profile } from '../../../shared/types';
+import type { AppActions } from '../../hooks/useAppState';
+import { RedirectRuleList } from './RedirectRuleList';
 
-export function RedirectScreen({ profile, actions }: { profile: Profile; actions: AppActions }) {
-  const [focusId, setFocusId] = useState<string | null>(null)
+export function RedirectScreen({
+  profile,
+  actions,
+}: {
+  profile: Profile;
+  actions: AppActions;
+}) {
+  const [focusId, setFocusId] = useState<string | null>(null);
   return (
     <RedirectRuleList
       rules={profile.redirectRules}
@@ -12,5 +18,5 @@ export function RedirectScreen({ profile, actions }: { profile: Profile; actions
       actions={actions}
       onAdd={() => setFocusId(actions.addRedirectRule())}
     />
-  )
+  );
 }
