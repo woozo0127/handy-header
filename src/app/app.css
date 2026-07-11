@@ -303,3 +303,46 @@ button { font-family: var(--font-body); }
 }
 .profmenu-new:hover { background: var(--color-overlay-hover); color: var(--color-text-primary); }
 .profmenu-error { padding: 4px 11px 8px; color: var(--color-text-red); font-size: 12px; word-break: break-word; }
+
+/* Confirm dialog */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-overlay);
+}
+.confirm-card {
+  min-width: 240px;
+  max-width: 360px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--color-bg-popover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-container);
+}
+.confirm-message {
+  color: var(--color-text-primary);
+  font-size: 13.5px;
+  word-break: break-all;
+}
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.confirm-btn {
+  padding: 7px 14px;
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-inner);
+  color: var(--color-text-primary);
+  font-size: 13px;
+  cursor: pointer;
+}
+.confirm-btn:hover { background: var(--color-overlay-hover); }
+.confirm-btn-danger { color: var(--color-text-red); }
