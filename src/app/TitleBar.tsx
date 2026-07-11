@@ -12,7 +12,7 @@ export function TitleBar({ state, actions }: { state: AppState; actions: AppActi
           <div className="logo-bar" />
           <div className="logo-bar" />
         </div>
-        <span className="titlebar-name">handy-header</span>
+        <span className="titlebar-name">HandyHeader</span>
       </div>
       <div className="titlebar-controls">
         <ProfileSelector profiles={state.profiles} activeProfileId={state.activeProfileId} actions={actions} />
