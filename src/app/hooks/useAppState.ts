@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { AppState, HeaderDirection, HeaderRule, Profile, RedirectRule } from '../../shared/types'
 import { loadState, saveState } from '../../shared/storage'
 import { createDefaultProfile } from '../../shared/defaults'
+import { uniqueProfileName } from '../../shared/transfer'
 
 export type AppActions = {
   toggleGlobal: (on: boolean) => void
@@ -9,6 +10,7 @@ export type AppActions = {
   addProfile: () => void
   renameProfile: (id: string, name: string) => void
   removeProfile: (id: string) => void
+  importProfile: (profile: Profile) => void
   addHeaderRule: (direction: HeaderDirection) => string
   updateHeaderRule: (id: string, patch: Partial<Omit<HeaderRule, 'id'>>) => void
   removeHeaderRule: (id: string) => void
@@ -69,6 +71,15 @@ export function useAppState() {
             profiles,
             activeProfileId: prev.activeProfileId === id ? profiles[0].id : prev.activeProfileId,
           }
+        }),
+
+      importProfile: (profile) =>
+        update((prev) => {
+          const named = {
+            ...profile,
+            name: uniqueProfileName(profile.name, prev.profiles.map((p) => p.name)),
+          }
+          return { ...prev, profiles: [...prev.profiles, named], activeProfileId: named.id }
         }),
 
       addHeaderRule: (direction) => {
