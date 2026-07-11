@@ -1,0 +1,92 @@
+:root {
+  --color-accent: #DFE2E5;
+  --color-on-accent: #15110C;
+  --color-accent-muted: rgba(223,226,229,0.14);
+  --color-bg-body: #111112;
+  --color-bg-surface: #1F1F22;
+  --color-bg-card: #1F1F22;
+  --color-bg-popover: #28292C;
+  --color-bg-muted: #17171A;
+  --color-overlay: #11111299;
+  --color-overlay-hover: #FFFFFF0C;
+  --color-text-primary: #DFE2E5;
+  --color-text-secondary: #AAAFB5;
+  --color-text-disabled: #6F747C;
+  --color-text-red: #FF8A80;
+  --color-border: #F2F4F619;
+  --color-border-emphasized: #494D53;
+  --color-track: #5A5E66;
+  --color-brand: #3D87FF;
+  --color-text-blue: #AFD7FF;
+  --color-text-purple: #B3B0FE;
+  --color-icon-green: #26A756;
+  --radius-inner: 8px;
+  --radius-element: 12px;
+  --radius-container: 16px;
+  --radius-full: 9999px;
+  --font-body: 'Figtree', -apple-system, system-ui, sans-serif;
+  --font-code: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
+  --shadow-high: 0 24px 60px rgba(0,0,0,.45), 0 4px 12px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body { width: 440px; height: 600px; }
+
+body {
+  margin: 0;
+  background: var(--color-bg-surface);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+#root { height: 100%; display: flex; flex-direction: column; }
+
+.mono { font-family: var(--font-code); }
+
+button { font-family: var(--font-body); }
+
+.rl-scroll::-webkit-scrollbar { width: 8px; }
+.rl-scroll::-webkit-scrollbar-thumb { background: var(--color-border-emphasized); border-radius: var(--radius-full); }
+.rl-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ===== Toggle ===== */
+.toggle {
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-track);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .18s;
+}
+.toggle.is-on { background: var(--color-accent); }
+.toggle-knob {
+  border-radius: var(--radius-full);
+  background: var(--color-text-primary);
+  transition: transform .18s;
+}
+.toggle.is-on .toggle-knob { background: var(--color-on-accent); }
+.toggle-md { width: 36px; height: 20px; }
+.toggle-md .toggle-knob { width: 16px; height: 16px; }
+.toggle-md.is-on .toggle-knob { transform: translateX(16px); }
+.toggle-sm { width: 34px; height: 19px; }
+.toggle-sm .toggle-knob { width: 15px; height: 15px; }
+.toggle-sm.is-on .toggle-knob { transform: translateX(15px); }
+
+/* ===== EditableField ===== */
+.editable {
+  outline: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin: 0 -2px;
+  cursor: text;
+  transition: background .12s, box-shadow .12s;
+}
+.editable:hover { background: var(--color-overlay-hover); }
+.editable:focus { background: var(--color-bg-muted); box-shadow: 0 0 0 1px var(--color-border-emphasized); }
+.editable:empty::before { content: attr(data-ph); color: var(--color-text-disabled); pointer-events: none; }
