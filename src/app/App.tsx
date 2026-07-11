@@ -3,6 +3,7 @@ import { useAppState } from './hooks/useAppState'
 import { TitleBar } from './TitleBar'
 import { Tabs, type TabId } from './Tabs'
 import { ErrorBanner } from './components/ErrorBanner'
+import { HeadersScreen } from './screens/headers/HeadersScreen'
 
 export function App() {
   const { state, activeProfile, actions } = useAppState()
@@ -17,7 +18,7 @@ export function App() {
       <ErrorBanner />
       <main className="panel rl-scroll">
         {tab === 'headers' ? (
-          <div style={{ padding: 14 }}>Headers screen (Task 8)</div>
+          <HeadersScreen profile={activeProfile} actions={actions} />
         ) : (
           <div style={{ padding: 14 }}>Redirect screen (Task 9)</div>
         )}

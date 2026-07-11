@@ -177,3 +177,71 @@ button { font-family: var(--font-body); }
   font-family: var(--font-code);
   word-break: break-all;
 }
+
+/* ===== Rule rows (Headers/Redirect 공용) ===== */
+.sec-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px 5px; }
+[data-sec] + [data-sec] .sec-head { padding-top: 16px; }
+.sec-label {
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.sec-label.is-blue { color: var(--color-text-blue); }
+.sec-label.is-purple { color: var(--color-text-purple); }
+.sec-line { flex: 1; height: 1px; background: var(--color-border); }
+
+.rule-row { display: flex; align-items: center; gap: 9px; padding: 9px 12px; }
+.rule-row.is-off { opacity: .5; }
+.rule-name { color: var(--color-text-primary); font-size: 12px; flex-shrink: 0; }
+.rule-colon { color: var(--color-text-disabled); font-family: var(--font-code); font-size: 12px; }
+.rule-value {
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rule-value:focus { overflow-x: auto; text-overflow: clip; }
+
+.remove {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-text-disabled);
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity .12s, color .12s, background .12s;
+}
+.rule-row:hover .remove, .remove:focus { opacity: 1; }
+.remove:hover { color: var(--color-text-red); background: var(--color-overlay-hover); }
+
+.addrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 6px 12px 2px;
+  padding: 9px 10px;
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-inner);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  width: calc(100% - 24px);
+}
+.addrow:hover {
+  background: var(--color-overlay-hover);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-emphasized);
+}
+.addrow-plus { font-size: 15px; line-height: 1; margin-top: -1px; }
