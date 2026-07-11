@@ -50,6 +50,15 @@ describe('storage', () => {
     expect(store[STATE_KEY]).toEqual(state)
   })
 
+  it('version 불일치 상태면 loadState는 기본 상태로 초기화해 저장한다', async () => {
+    store[STATE_KEY] = { version: 2 }
+    const state = await loadState()
+    expect(state.version).toBe(1)
+    expect(state.profiles).toHaveLength(1)
+    expect(state.profiles[0].name).toBe('Local Dev')
+    expect(store[STATE_KEY]).toEqual(state)
+  })
+
   it('saveState 후 loadState는 저장된 상태를 돌려준다', async () => {
     const state = createDefaultState()
     state.globalEnabled = false
