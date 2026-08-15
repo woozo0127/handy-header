@@ -3,7 +3,7 @@ import { defineManifest } from '@crxjs/vite-plugin';
 export default defineManifest({
   manifest_version: 3,
   name: 'HandyHeader',
-  version: '0.1.0',
+  version: '0.2.0',
   description: 'Modify HTTP request/response headers and redirect URLs.',
   icons: {
     16: 'public/icons/icon-16.png',
