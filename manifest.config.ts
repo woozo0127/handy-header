@@ -18,6 +18,7 @@ export default defineManifest({
       32: 'public/icons/icon-32.png',
     },
   },
+  options_ui: { page: 'src/app/index.html', open_in_tab: true },
   background: { service_worker: 'src/background/index.ts', type: 'module' },
   permissions: ['declarativeNetRequest', 'storage'],
   host_permissions: ['<all_urls>'],
