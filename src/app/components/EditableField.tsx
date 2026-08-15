@@ -32,7 +32,7 @@ export function EditableField({
   return (
     <span
       ref={ref}
-      contentEditable
+      contentEditable="plaintext-only"
       suppressContentEditableWarning
       data-ph={placeholder}
       className={className ? `editable ${className}` : 'editable'}
