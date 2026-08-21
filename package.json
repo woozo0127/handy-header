@@ -12,7 +12,8 @@
     "dev": "vite",
     "build": "vite build",
     "test": "vitest run --passWithNoTests",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "zip": "pnpm build && node scripts/zip.mjs"
   },
   "keywords": [],
   "author": "",
