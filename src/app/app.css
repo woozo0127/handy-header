@@ -70,8 +70,10 @@ body {
   }
 }
 
+/* 합자 해제 — JetBrains Mono로 폴백되면 `//`가 한 글자처럼 보인다 */
 .mono {
   font-family: var(--font-code);
+  font-variant-ligatures: none;
 }
 
 button {
