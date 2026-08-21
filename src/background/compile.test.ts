@@ -161,6 +161,54 @@ describe('compile', () => {
     });
   });
 
+  it('match에 *가 없으면 뒤에 있는 것처럼 접두사로 매치하고 꼬리를 넘긴다', () => {
+    const rules = compile(
+      stateWith({
+        redirectRules: [
+          redirect({
+            match: 'https://api.example.com',
+            target: 'http://localhost:8080',
+          }),
+        ],
+      }),
+    );
+    expect(rules[0].condition.regexFilter).toBe(
+      '^https://api\\.example\\.com(.*)$',
+    );
+    expect(rules[0].action).toEqual({
+      type: 'redirect',
+      redirect: { regexSubstitution: 'http://localhost:8080\\1' },
+    });
+  });
+
+  it('target에 *가 없으면 match의 마지막 캡처를 끝에 이어붙인다', () => {
+    const rules = compile(
+      stateWith({
+        redirectRules: [
+          redirect({
+            match: 'https://a.com/*',
+            target: 'http://localhost:8080',
+          }),
+        ],
+      }),
+    );
+    expect(rules[0].action).toEqual({
+      type: 'redirect',
+      redirect: { regexSubstitution: 'http://localhost:8080\\1' },
+    });
+  });
+
+  it('match에 *가 하나라도 있으면 암시적 와일드카드를 붙이지 않는다', () => {
+    const rules = compile(
+      stateWith({
+        redirectRules: [
+          redirect({ match: 'https://*.a.com', target: 'http://localhost/*' }),
+        ],
+      }),
+    );
+    expect(rules[0].condition.regexFilter).toBe('^https://(.*)\\.a\\.com$');
+  });
+
   it('target의 *가 match보다 많으면 제외한다', () => {
     const rules = compile(
       stateWith({

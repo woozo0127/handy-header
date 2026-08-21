@@ -51,9 +51,16 @@ function wildcardCount(pattern: string): number {
   return pattern.split('*').length - 1;
 }
 
+// match에 *가 하나도 없으면 뒤에 있는 것으로 친다 — 리다이렉트의 기본은 URL 치환이다
+function effectiveMatch(match: string): string {
+  return match.includes('*') ? match : `${match}*`;
+}
+
 function isValidRedirect(rule: RedirectRule): boolean {
   if (!rule.match || !rule.target) return false;
-  return wildcardCount(rule.target) <= wildcardCount(rule.match);
+  return (
+    wildcardCount(rule.target) <= wildcardCount(effectiveMatch(rule.match))
+  );
 }
 
 function escapeRegex(literal: string): string {
@@ -61,12 +68,15 @@ function escapeRegex(literal: string): string {
 }
 
 function toRegexFilter(match: string): string {
-  return `^${match.split('*').map(escapeRegex).join('(.*)')}$`;
+  return `^${effectiveMatch(match).split('*').map(escapeRegex).join('(.*)')}$`;
 }
 
-function toSubstitution(target: string): string {
+// target이 match의 마지막 캡처를 쓰지 않으면 끝에 이어붙인다 — 꼬리는 버리지 않는다
+function toSubstitution(target: string, match: string): string {
   let group = 0;
-  return target.replace(/\*/g, () => `\\${++group}`);
+  const substituted = target.replace(/\*/g, () => `\\${++group}`);
+  const last = wildcardCount(effectiveMatch(match));
+  return group < last ? `${substituted}\\${last}` : substituted;
 }
 
 export function compile(state: AppState): DnrRule[] {
@@ -99,7 +109,9 @@ export function compile(state: AppState): DnrRule[] {
       priority: 1,
       action: {
         type: 'redirect',
-        redirect: { regexSubstitution: toSubstitution(rule.target) },
+        redirect: {
+          regexSubstitution: toSubstitution(rule.target, rule.match),
+        },
       },
       condition: {
         regexFilter: toRegexFilter(rule.match),
