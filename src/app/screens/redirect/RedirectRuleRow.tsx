@@ -16,7 +16,7 @@ export function RedirectRuleRow({ rule, autoFocus, actions }: Props) {
         <EditableField
           className="redirect-match mono"
           value={rule.match}
-          placeholder="https://…/*"
+          placeholder="https://api.example.com"
           autoFocus={autoFocus}
           onCommit={(match) => actions.updateRedirectRule(rule.id, { match })}
         />
@@ -25,7 +25,7 @@ export function RedirectRuleRow({ rule, autoFocus, actions }: Props) {
           <EditableField
             className="redirect-target mono"
             value={rule.target}
-            placeholder="http://localhost/*"
+            placeholder="http://localhost:8080"
             onCommit={(target) =>
               actions.updateRedirectRule(rule.id, { target })
             }
