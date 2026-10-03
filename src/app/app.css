@@ -319,7 +319,14 @@ button {
 .rule-name {
   color: var(--color-text-primary);
   font-size: 13px;
-  flex-shrink: 0;
+  max-width: 40%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rule-name:focus {
+  max-width: none;
 }
 .rule-colon {
   color: var(--color-text-disabled);
@@ -335,9 +342,11 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.rule-name:focus,
 .rule-value:focus {
   overflow-x: auto;
   text-overflow: clip;
+  scrollbar-width: none;
 }
 
 .remove {
