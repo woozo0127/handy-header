@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 type Props = {
   message: string;
@@ -13,28 +13,41 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: Props) {
-  // Escape로 취소 — 다이얼로그가 떠 있는 동안만 리스닝
+  const messageId = useId();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  // 열리면 포커스를 다이얼로그 안으로 옮겨 Escape가 오버레이에 닿게 한다 — 파괴적 동작이라 Cancel에 둔다
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCancel();
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [onCancel]);
+    cancelRef.current?.focus();
+  }, []);
 
   return (
     <div
       className="confirm-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={messageId}
+      tabIndex={-1}
       onClick={(e) => {
         // 오버레이 클릭은 취소 — 전파를 막아 메뉴 닫기 리스너에 닿지 않게 한다
         e.stopPropagation();
-        onCancel();
+        if (e.target === e.currentTarget) onCancel();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') onCancel();
       }}
     >
-      <div className="confirm-card" onClick={(e) => e.stopPropagation()}>
-        <div className="confirm-message">{message}</div>
+      <div className="confirm-card">
+        <div id={messageId} className="confirm-message">
+          {message}
+        </div>
         <div className="confirm-actions">
-          <button type="button" className="confirm-btn" onClick={onCancel}>
+          <button
+            ref={cancelRef}
+            type="button"
+            className="confirm-btn"
+            onClick={onCancel}
+          >
             Cancel
           </button>
           <button

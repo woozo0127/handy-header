@@ -30,8 +30,11 @@ export function EditableField({
   }, [autoFocus]);
 
   return (
+    // biome-ignore lint/a11y/useSemanticElements: 내용 길이에 맞춰 폭이 정해져야 해서 <input> 대신 contenteditable을 쓴다
     <span
       ref={ref}
+      role="textbox"
+      tabIndex={0}
       contentEditable="plaintext-only"
       suppressContentEditableWarning
       data-ph={placeholder}

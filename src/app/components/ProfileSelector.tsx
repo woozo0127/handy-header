@@ -15,6 +15,7 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
   const [open, setOpen] = useState(false);
   const active = profiles.find((p) => p.id === activeProfileId);
 
+  const menuRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Profile | null>(null);
@@ -46,10 +47,17 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
     }
   };
 
-  // 바깥 클릭 시 닫기 — 트리거/메뉴 내부 클릭은 stopPropagation으로 여기 도달하지 않는다
+  const selectProfile = (id: string) => {
+    actions.selectProfile(id);
+    setOpen(false);
+  };
+
+  // 바깥 클릭 시 닫기 — 트리거와 확인 다이얼로그 클릭은 stopPropagation으로 여기 도달하지 않는다
   useEffect(() => {
     if (!open) return;
-    const close = () => setOpen(false);
+    const close = (e: MouseEvent) => {
+      if (!menuRef.current?.contains(e.target as Node)) setOpen(false);
+    };
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, [open]);
@@ -69,19 +77,30 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
       </button>
 
       {open && (
-        <div className="profmenu" onClick={(e) => e.stopPropagation()}>
-          {profiles.map((profile) => (
-            <div
-              key={profile.id}
-              className={`profmenu-item${profile.id === activeProfileId ? ' is-active' : ''}`}
-              onClick={() => {
-                actions.selectProfile(profile.id);
-                setOpen(false);
-              }}
-            >
-              <span className="profmenu-item-label">
-                {/* 이름 클릭은 편집이지 선택이 아니므로 항목 onClick으로 전파를 막는다 */}
-                <span onClick={(e) => e.stopPropagation()}>
+        <div ref={menuRef} className="profmenu">
+          <div role="listbox" aria-label="Profiles">
+            {profiles.map((profile) => (
+              <div
+                key={profile.id}
+                role="option"
+                aria-selected={profile.id === activeProfileId}
+                tabIndex={0}
+                className={`profmenu-item${profile.id === activeProfileId ? ' is-active' : ''}`}
+                onClick={(e) => {
+                  // 이름 칸 클릭은 편집이지 선택이 아니다
+                  if ((e.target as Element).closest('[role="textbox"]')) return;
+                  selectProfile(profile.id);
+                }}
+                onKeyDown={(e) => {
+                  // 이름 편집 중 Enter는 EditableField의 커밋이므로 항목 자신에 포커스가 있을 때만 받는다
+                  if (e.target !== e.currentTarget) return;
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectProfile(profile.id);
+                  }
+                }}
+              >
+                <span className="profmenu-item-label">
                   <EditableField
                     value={profile.name}
                     placeholder="Profile name"
@@ -90,22 +109,22 @@ export function ProfileSelector({ profiles, activeProfileId, actions }: Props) {
                     }}
                   />
                 </span>
-              </span>
-              {profiles.length > 1 && (
-                <button
-                  type="button"
-                  className="remove"
-                  title="Remove profile"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setPendingDelete(profile);
-                  }}
-                >
-                  ×
-                </button>
-              )}
-            </div>
-          ))}
+                {profiles.length > 1 && (
+                  <button
+                    type="button"
+                    className="remove"
+                    title="Remove profile"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPendingDelete(profile);
+                    }}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
           <div className="profmenu-divider" />
           <button
             type="button"
