@@ -37,6 +37,8 @@ export function EditableField({
       data-ph={placeholder}
       className={className ? `editable ${className}` : 'editable'}
       onBlur={() => {
+        // overflow가 hidden으로 돌아가도 스크롤 위치는 남아 앞부분이 가려지므로 되돌린다
+        if (ref.current) ref.current.scrollLeft = 0;
         if (cancelled.current) {
           cancelled.current = false;
           return;
