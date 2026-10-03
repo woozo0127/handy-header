@@ -13,7 +13,8 @@
     "build": "vite build",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit",
-    "zip": "pnpm build && node scripts/zip.mjs"
+    "zip": "pnpm build && node scripts/zip.mjs",
+    "storybook": "storybook dev -p 6006"
   },
   "keywords": [],
   "author": "",
@@ -26,11 +27,13 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.3",
     "@crxjs/vite-plugin": "^2.7.1",
+    "@storybook/react-vite": "^10.6.1",
     "@types/chrome": "^0.2.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "sharp": "^0.35.3",
+    "storybook": "^10.6.1",
     "typescript": "^7.0.2",
     "vite": "^8.1.4",
     "vitest": "^4.1.10"
