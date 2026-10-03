@@ -24,7 +24,7 @@ function installFakeChrome() {
           const changes: Changes = Object.fromEntries(
             Object.entries(items).map(([k, v]) => [k, { newValue: v }]),
           );
-          listeners.forEach((l) => l(changes, 'local'));
+          for (const l of listeners) l(changes, 'local');
         },
       },
       onChanged: { addListener: (l: Listener) => listeners.push(l) },
