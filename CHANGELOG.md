@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Keyboard selection in the profile menu: Tab to a profile, then press Enter
+  or Space.
+
+### Fixed
+
+- A long header name no longer squeezes the value out of the row. Names take
+  at most 40% of the row and end in an ellipsis, then show in full while you
+  edit them.
+- A long value no longer stays scrolled to its end after you finish editing.
+- Editing a long field no longer shows a horizontal scrollbar.
+- The delete confirmation dialog now takes focus when it opens.
+
 ## 0.3.0
 
 ### Changed
