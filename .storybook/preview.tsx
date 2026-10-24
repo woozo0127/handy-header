@@ -4,6 +4,9 @@ import '@fontsource/figtree/600.css';
 import '@fontsource/figtree/700.css';
 import '../src/app/app.css';
 import type { Preview } from '@storybook/react-vite';
+import { applySavedTheme } from '../src/app/hooks/useTheme';
+
+applySavedTheme();
 
 const preview: Preview = {
   parameters: { layout: 'fullscreen' },

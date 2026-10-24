@@ -1,6 +1,7 @@
 import type { AppState } from '../../shared/types';
 import type { AppActions } from '../hooks/useAppState';
 import { ProfileSelector } from './ProfileSelector';
+import { ThemeButton } from './ThemeButton';
 import { Toggle } from './Toggle';
 
 export function TitleBar({
@@ -21,6 +22,7 @@ export function TitleBar({
         <span className="titlebar-name">HandyHeader</span>
       </div>
       <div className="titlebar-controls">
+        <ThemeButton />
         <ProfileSelector
           profiles={state.profiles}
           activeProfileId={state.activeProfileId}

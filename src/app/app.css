@@ -1,31 +1,45 @@
+/* 색 토큰은 light-dark(라이트, 다크)로 정의하고 color-scheme이 둘 중 하나를 고른다.
+   data-theme이 없거나 system이면 OS 설정을 따른다 */
 :root {
-  --color-accent: #dfe2e5;
-  --color-on-accent: #15110c;
-  --color-accent-muted: rgba(223, 226, 229, 0.14);
-  --color-bg-body: #111112;
-  --color-bg-surface: #1f1f22;
-  --color-bg-card: #1f1f22;
-  --color-bg-popover: #28292c;
-  --color-bg-muted: #17171a;
-  --color-overlay: #11111299;
-  --color-overlay-hover: #ffffff0c;
-  --color-text-primary: #dfe2e5;
-  --color-text-secondary: #aaafb5;
-  --color-text-disabled: #6f747c;
-  --color-text-red: #ff8a80;
-  --color-border: #f2f4f619;
-  --color-border-emphasized: #494d53;
-  --color-track: #5a5e66;
-  --color-brand: #3d87ff;
-  --color-text-blue: #afd7ff;
-  --color-text-purple: #b3b0fe;
-  --color-icon-green: #26a756;
+  color-scheme: light dark;
+  --color-accent: light-dark(#1f2124, #dfe2e5);
+  --color-on-accent: light-dark(#f5f6f7, #15110c);
+  --color-accent-muted: light-dark(
+    rgba(31, 33, 36, 0.1),
+    rgba(223, 226, 229, 0.14)
+  );
+  --color-bg-body: light-dark(#eceef1, #111112);
+  --color-bg-surface: light-dark(#ffffff, #1f1f22);
+  --color-bg-card: light-dark(#ffffff, #1f1f22);
+  --color-bg-popover: light-dark(#ffffff, #28292c);
+  --color-bg-muted: light-dark(#f4f5f7, #17171a);
+  --color-overlay: light-dark(#11111266, #11111299);
+  --color-overlay-hover: light-dark(#0000000a, #ffffff0c);
+  --color-text-primary: light-dark(#1f2124, #dfe2e5);
+  --color-text-secondary: light-dark(#5b6068, #aaafb5);
+  --color-text-disabled: light-dark(#8a8f96, #6f747c);
+  --color-text-red: light-dark(#d93025, #ff8a80);
+  --color-border: light-dark(#1112141a, #f2f4f619);
+  --color-border-emphasized: light-dark(#c4c8ce, #494d53);
+  --color-track: light-dark(#c9cdd2, #5a5e66);
+  --color-brand: light-dark(#2f6fe0, #3d87ff);
+  --color-text-blue: light-dark(#1a5fb4, #afd7ff);
+  --color-text-purple: light-dark(#5b4fd6, #b3b0fe);
+  --color-icon-green: light-dark(#1e8e47, #26a756);
   --radius-inner: 8px;
   --radius-element: 12px;
   --radius-container: 16px;
   --radius-full: 9999px;
   --font-body: "Figtree", -apple-system, system-ui, sans-serif;
   --font-code: ui-monospace, "SF Mono", "JetBrains Mono", monospace;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 * {
@@ -189,7 +203,12 @@ button {
   gap: 10px;
 }
 
+/* 로고는 툴바 아이콘과 같아야 하므로 테마와 무관하게 다크 값으로 고정한다.
+   color-scheme: dark로는 안 된다 — 빌드가 light-dark()를 :root에서 값이 확정되는 변수로 바꾼다 */
 .logo {
+  --color-accent: #dfe2e5;
+  --color-on-accent: #15110c;
+  --color-text-secondary: #aaafb5;
   width: 28px;
   height: 28px;
   border-radius: var(--radius-inner);
@@ -230,6 +249,22 @@ button {
   font-weight: 500;
   cursor: pointer;
 }
+.theme-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-inner);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.theme-btn:hover {
+  color: var(--color-text-primary);
+}
+
 .profile-caret {
   color: var(--color-text-secondary);
   font-size: 11px;
