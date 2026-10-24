@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Light mode. By default the popup and options page follow the system setting.
+- A theme button in the title bar cycles through System, Light, and Dark. The
+  choice is remembered.
+
 ## 0.4.0
 
 ### Added
